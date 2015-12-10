@@ -7,7 +7,7 @@ import observer.BufferObserver;
 import receiver.EngineEditionImplemantation;
 
 /**
- * 
+ * Main class of the project
  * @author Mileem
  *
  */
