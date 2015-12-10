@@ -18,10 +18,13 @@ import javax.swing.event.CaretListener;
 
 import command.Command;
 
+/**
+ * Interface of the editor
+ * @author Mileem
+ *
+ */
 public class HumanMachineInterface extends JFrame{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	private char lastChar; 
@@ -34,19 +37,22 @@ public class HumanMachineInterface extends JFrame{
 	private Command select;
 	private Command save;
 
-	public final JButton copyButton = new JButton("Copier", new ImageIcon("img/copier.png"));
-    public final JButton pastButton = new JButton("Coller", new ImageIcon("img/coller.png"));
-    public final JButton cutButton = new JButton("Couper", new ImageIcon("img/couper.png"));
-    public final JButton saveButton = new JButton("Enregistrer", new ImageIcon("img/save.png"));
+	public final JButton copyButton = new CustomButton("Copier", "copier");
+	public final JButton pastButton = new CustomButton("Coller", "coller");
+	public final JButton cutButton = new CustomButton("Couper", "couper");
+	public final JButton saveButton = new CustomButton("Enregistrer", "save");
     public final JButton closeButton = new JButton("Fermer l'éditeur");
     
-    public final JTextArea mainContent = new TextAreaCustom();
+    public final JTextArea mainContent = new CustomTextArea();
     
     public final JPanel topButton = new JPanel();
     public final JPanel textArea = new JPanel();
     public final JPanel close = new JPanel();
     public final JPanel publisher = new JPanel();
 	
+    /**
+     * Constructor of HumanMachineInterface
+     */
 	public HumanMachineInterface() {
 		this.lastChar = '\0';
 		
@@ -64,11 +70,11 @@ public class HumanMachineInterface extends JFrame{
 		textArea.setLayout(new BoxLayout(textArea, BoxLayout.LINE_AXIS));
 		mainContent.setSize(400, 250);
 		mainContent.setVisible(true);
+		mainContent.requestFocusInWindow();
 		JScrollPane scrollPaneForMainContent = new JScrollPane(mainContent); 
 		textArea.add(scrollPaneForMainContent);
 		
 		this.mainContent.addCaretListener(new CaretListener() {
-			
 			@Override
 			public void caretUpdate(CaretEvent e) {
 				select.execute(); 
@@ -76,7 +82,6 @@ public class HumanMachineInterface extends JFrame{
 		});
 		
 		this.mainContent.addKeyListener(new KeyListener() {
-			
 			@Override
 			public void keyTyped(KeyEvent e) {
 				if(e.getKeyCode() != KeyEvent.VK_BACK_SPACE) {					
@@ -86,10 +91,7 @@ public class HumanMachineInterface extends JFrame{
 			}
 			
 			@Override
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-				
+			public void keyReleased(KeyEvent e) {	
 			}
 			
 			@Override
@@ -102,7 +104,6 @@ public class HumanMachineInterface extends JFrame{
 		});
 		
 		this.copyButton.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				copy.execute();
@@ -111,7 +112,6 @@ public class HumanMachineInterface extends JFrame{
 		});
 		
 		this.pastButton.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				past.execute();
@@ -120,7 +120,6 @@ public class HumanMachineInterface extends JFrame{
 		});
 		
 		this.cutButton.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				cut.execute();
@@ -129,7 +128,6 @@ public class HumanMachineInterface extends JFrame{
 		});
 		
 		this.saveButton.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				save.execute();
@@ -156,14 +154,27 @@ public class HumanMachineInterface extends JFrame{
 		this.setVisible(true);
 	}
 	
+	/**
+	 * 
+	 * @return last char enter in the mainContent
+	 */
 	public char getChar() {
 		return this.lastChar;
 	}
 	
-	public void updateMainContent(String text) {
+	/**
+	 * Update the mainContent
+	 * @param text that should appear in mainContent
+	 */
+	public void setMainContent(String text) {
 		this.mainContent.setText(text);
 	}
 	
+	/**
+	 * Definition commands
+	 * @param commands List contains commands
+	 * @throws Exception
+	 */
 	public void invokeCommands(HashMap<String, Command> commands) throws Exception{
 		this.copy = commands.get("copy");
 		if(copy == null) {
@@ -195,7 +206,4 @@ public class HumanMachineInterface extends JFrame{
 		}
 	}
 	
-	public void setMainContent(String text) {
-		this.mainContent.setText(text);
-	}
 }
