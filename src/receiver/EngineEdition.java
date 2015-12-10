@@ -1,5 +1,10 @@
 package receiver;
 
+/**
+ * Interface of engine edition
+ * @author Mileem
+ *
+ */
 public interface EngineEdition {
 
 	public void copy();

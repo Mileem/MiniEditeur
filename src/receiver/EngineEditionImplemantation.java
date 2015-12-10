@@ -7,17 +7,28 @@ import java.util.Observable;
 
 import javax.swing.JFileChooser;
 
+/**
+ * Implemantation of interface of engine edition
+ * @author Mileem
+ *
+ */
 public class EngineEditionImplemantation extends Observable implements EngineEdition {
 	private Buffer buffer;
 	private Paperweight paperweight;
 	private Selection selection;
 	
+	/**
+	 * Build the engine edition
+	 */
 	public EngineEditionImplemantation() {
 		this.setBuffer(new Buffer());
 		this.setPaperweight(new Paperweight());
 		this.setSelection(new Selection());
 	}
 	
+	/**
+	 * Copy
+	 */
 	@Override
 	public void copy() {
 		if(this.selection.getLength() > 0) {
@@ -26,7 +37,10 @@ public class EngineEditionImplemantation extends Observable implements EngineEdi
 		setChanged();
 		notifyObservers();
 	}
-
+	
+	/**
+	 * Past
+	 */
 	@Override
 	public void past() {
 		if(this.selection.getLength() == 0) {
@@ -40,7 +54,10 @@ public class EngineEditionImplemantation extends Observable implements EngineEdi
 		setChanged();
 		notifyObservers();
 	}
-
+	
+	/**
+	 * Cut
+	 */
 	@Override
 	public void cut() {
 		if(this.selection.getLength() > 0) {
@@ -51,7 +68,10 @@ public class EngineEditionImplemantation extends Observable implements EngineEdi
 		setChanged();
 		notifyObservers();
 	}
-
+	
+	/**
+	 * Select
+	 */
 	@Override
 	public void select(int start, int length) {
 		if(start >= 0 && length <= this.buffer.getText().length()) {
@@ -60,6 +80,10 @@ public class EngineEditionImplemantation extends Observable implements EngineEdi
 		} 
 	}
 
+	/**
+	 * Enter a character
+	 * param c a character
+	 */
 	@Override
 	public void enter(char c) {
 		if(this.selection.getStart() != this.selection.getEnd()) {
@@ -71,7 +95,10 @@ public class EngineEditionImplemantation extends Observable implements EngineEdi
 			this.buffer.getText().insert(this.selection.getStart(), c);
 		}
 	}
-
+	
+	/**
+	 * Delete
+	 */
 	@Override
 	public void delete() {
 		if(this.selection.getLength() != 0) {
@@ -84,6 +111,9 @@ public class EngineEditionImplemantation extends Observable implements EngineEdi
 		}
 	}
 	
+	/**
+	 * Save
+	 */
 	@Override
 	public void save() {
 		JFileChooser pathFile = new JFileChooser();

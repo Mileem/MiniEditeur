@@ -1,5 +1,10 @@
 package receiver;
 
+/**
+ * Memory the last selection make by the user
+ * @author Mileem
+ *
+ */
 public class Selection {
 	private int start;
 	private int length;
